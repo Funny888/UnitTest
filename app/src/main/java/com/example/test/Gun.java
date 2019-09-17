@@ -11,7 +11,7 @@ public class Gun {
     private int BULLETS = 20;
 
     public Gun(){
-        mDamageGun = Damage.damageGun();
+        mDamageGun = Damage.damagePlayer();
         mSetDamage = new SetDamageClass();
     }
 

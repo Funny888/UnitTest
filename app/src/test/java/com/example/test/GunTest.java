@@ -3,11 +3,14 @@ package com.example.test;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
@@ -17,7 +20,9 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import org.powermock.reflect.Whitebox;
 import org.robolectric.annotation.Config;
+import org.robolectric.annotation.Implementation;
 
 import static org.junit.Assert.assertEquals;
 import static org.powermock.api.mockito.PowerMockito.mock;
@@ -36,13 +41,11 @@ public class GunTest {
     @Mock
     Damage mDamageGun;
 
-    @Spy
-    BroadcastReceiver mSetDamage;
-
 
     @Mock
     Intent mIntent;
 
+    @InjectMocks
     Gun mGun = new Gun();
 
     @Before
@@ -62,11 +65,15 @@ public class GunTest {
         assertEquals(20,mGun.getBullets());
     }
 
+
     @Test
     public void onReceive_ACTION_CRITICAL_DAMAGE_IntentGetActionEqACTION_CRITICAL_DAMAGE(){
 //        mIntent = new Intent(Player.ACTION_CRITICAL_DAMAGE).putExtra(Player.PERCENT_DAMAGE,19);
         when(mIntent.getAction()).thenReturn(Player.ACTION_CRITICAL_DAMAGE);
+        when(mIntent.getExtras()).thenReturn(mock(Bundle.class));
         when(mIntent.getExtras().getInt(Player.PERCENT_DAMAGE)).thenReturn(19);
+
+        BroadcastReceiver mSetDamage = Whitebox.getInternalState(mGun,"mSetDamage");
 
         mSetDamage.onReceive(mContext, mIntent);
 

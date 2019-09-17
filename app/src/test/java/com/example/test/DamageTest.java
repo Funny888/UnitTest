@@ -7,7 +7,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
@@ -15,6 +14,7 @@ import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.spy;
@@ -57,5 +57,10 @@ public class DamageTest {
         assertEquals(40,Whitebox.getInternalState(Damage.class,"mPercentDamage"));
     }
 
+    @Test
+    public void damagePlayer_mDamage_IsNotNull(){
+        Damage.damagePlayer();
 
+        assertNotNull(mDamage);
+    }
 }

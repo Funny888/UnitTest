@@ -8,8 +8,8 @@ public class Damage {
 
     private Damage(){}
 
-    public static Damage damageGun(){
-        if (mDamage != null) {
+    public static Damage damagePlayer(){
+        if (mDamage == null) {
             mDamage = new Damage();
         }
         return mDamage;
