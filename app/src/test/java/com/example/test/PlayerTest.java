@@ -12,16 +12,22 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+import org.powermock.api.mockito.PowerMockito;
 import org.powermock.reflect.Whitebox;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowApplication;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
@@ -61,12 +67,25 @@ public class PlayerTest {
     @Test
     public void shoot_recharge_mMessageEqRecharged(){
         Whitebox.setInternalState(mPlayer,"mCount",0);
+
         when(mGun.getBullets()).thenReturn(1);
 
         mPlayer.shoot();
 
         assertTrue(Whitebox.getInternalState(mPlayer,"mMessage").equals("Recharged"));
     }
+
+    @Test
+    public void shoot_recharge_mMessageEqRecharged1() throws IllegalAccessException {
+        Whitebox.getField(Player.class,"mCount").set(mPlayer,0);
+
+        when(mGun.getBullets()).thenReturn(1);
+
+        mPlayer.shoot();
+
+        assertTrue(Whitebox.getField(Player.class,"mMessage").get(mPlayer).equals("Recharged"));
+    }
+
 
     @Test
     public void shoot_recharge_mMessageEqNotRecharged(){

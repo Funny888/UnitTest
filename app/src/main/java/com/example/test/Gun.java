@@ -3,6 +3,7 @@ package com.example.test;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 public class Gun {
     private Damage mDamageGun;
@@ -13,6 +14,7 @@ public class Gun {
     public Gun(){
         mDamageGun = Damage.damagePlayer();
         mSetDamage = new SetDamageClass();
+        Bundle b = new Bundle();
     }
 
     public int getBullets(){
